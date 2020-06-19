@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+    php:
+        image: php:7.4-cli
+        working_dir: /data/application
+        volumes:
+            - ./:/data/application:cached
+
+    composer:
+        image: composer
+        working_dir: /data/application
+        volumes:
+            - ./:/data/application:cached
