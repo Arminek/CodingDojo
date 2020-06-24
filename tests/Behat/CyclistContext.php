@@ -15,6 +15,7 @@ final class CyclistContext implements Context
     private Cyclist $currentUser;
     private array $cyclists = [];
     private ?Cyclist $match;
+    private $similatity;
 
     /**
      * @Given there is cyclist :name
@@ -45,7 +46,13 @@ final class CyclistContext implements Context
      */
     public function heHasFavoriteRoutes(TableNode $table): void
     {
-
+        $similarity = [];
+        foreach ($table as $row) {
+            $routes[] = [
+                'name' => $row['name'],
+                'distance' => $row['distance']
+            ];
+        }
     }
 
     /**
@@ -81,5 +88,14 @@ final class CyclistContext implements Context
         $matchingService = new MatchingService($this->cyclists);
 
         $this->match = $matchingService->getPropositionFor($this->currentUser);
+    }
+
+    /**
+     * @Then I get no matches
+     */
+    public function iGetNoMatches()
+    {
+        $cyclistToFind = $this->cyclists[$cyclistName];
+        Assert::same(null, $cyclistToFind);
     }
 }

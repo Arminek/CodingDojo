@@ -14,6 +14,8 @@ class MatchingService
 
     public function getPropositionFor(Cyclist $currentUser): ?Cyclist
     {
+        $userRoutes = $currentUser->routes();
+
         return null;
     }
 }
