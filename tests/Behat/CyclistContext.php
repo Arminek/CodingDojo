@@ -54,12 +54,10 @@ final class CyclistContext implements Context
      */
     public function iGetAsProposition(string $cyclistName)
     {
-        Assert::same("Jane", 'Jerry');
-        /**
-         * $cyclistToFind = $this->cyclistRepository->getByName($cyclistName);
-         * $matchingService = new MatchingService();
-         * Assert::same($cyclistToFind, $matchingService->getPropositionFor($this->currentUser));
-         */
+//        Assert::same("Jane", 'Jerry');
+
+         $cyclistToFind = $this->cyclistRepository->getByName($cyclistName);
+         Assert::same($cyclistToFind, $matchingService->getPropositionFor($this->currentUser));
     }
 
     /**
@@ -71,11 +69,11 @@ final class CyclistContext implements Context
     }
 
     /**
-     * @Given I am :arg1
+     * @Given I am :name
      */
-    public function iAm($arg1)
+    public function iAm(string $name)
     {
-        //throw new PendingException();
+        $this->currentUser = $this->cyclists[$name];
     }
 
     /**
@@ -83,7 +81,9 @@ final class CyclistContext implements Context
      */
     public function iAmLookingForCompanion()
     {
-        //throw new PendingException();
+        $matchingService = new MatchingService();
+
+        $this->match = $matchingService->getPropositionFor($this->currentUser);
     }
 
 }
