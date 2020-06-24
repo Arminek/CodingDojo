@@ -20,10 +20,10 @@ Feature: Match cyclists base on similar routes
         Given I am "Jerry"
         And these routes are similar to each other in
             | first route | second route | similarity |
-            | Fort No     | West         |      0,98  |
-            | Fort No     | Waneedgates  |      0,88  |
-            | North Azad  | Waneedgates  |      0,68  |
-            | North Azad  | West         |      0,48  |
+            | Fort No     | West         |      0.98  |
+            | Fort No     | Waneedgates  |      0.88  |
+            | North Azad  | Waneedgates  |      0.68  |
+            | North Azad  | West         |      0.48  |
         When I am looking for companion
         Then I get "Jane" as proposition
 
@@ -32,9 +32,9 @@ Feature: Match cyclists base on similar routes
         Given I am "Jerry"
         And these routes are similar to each other in
             | first route | second route | similarity |
-            | Fort No     | West         |      0,98  |
-            | Fort No     | Waneedgates  |      0,48  |
-            | North Azad  | Waneedgates  |      0,38  |
-            | North Azad  | West         |      0,48  |
+            | Fort No     | West         |      0.98  |
+            | Fort No     | Waneedgates  |      0.48  |
+            | North Azad  | Waneedgates  |      0.38  |
+            | North Azad  | West         |      0.48  |
         When I am looking for companion
         Then I get no matches

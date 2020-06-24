@@ -20,16 +20,16 @@ class MatchingService
 
     public function getPropositionFor(Cyclist $currentUser): ?Cyclist
     {
-        $userRoutes = $currentUser->routes();
         foreach ($this->cyclists as $possibleMatchCyclist) {
             $matchingRouteCounter = 0;
             foreach ($currentUser->routes() as $currentUserRoute) {
                 foreach ($possibleMatchCyclist->routes() as $otherRoute) {
-                    if ($this->similarityService->compute($currentUserRoute, $otherRoute) >= 0.8) $matchingRouteCounter++;
+                    if ($this->similarityService->compute($currentUserRoute['name'], $otherRoute['name']) >= 0.8) $matchingRouteCounter++;
                     if ($matchingRouteCounter >= 2) return $possibleMatchCyclist;
                 }
             }
         }
+
         return null;
     }
 }

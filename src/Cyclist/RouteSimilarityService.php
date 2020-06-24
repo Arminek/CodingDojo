@@ -11,12 +11,17 @@ class RouteSimilarityService
 
     public function compute(string $currentUserRoute, string $otherRoute): float
     {
-        return 0.0;
+        return $this->similarities[$this->indexFor($currentUserRoute, $otherRoute)] ?? 0.0;
     }
 
     public function addSimilarity(string $route1, string $route2, float $param): void
     {
-        $this->similarities[trim($route1).trim($route2)] = $param;
-        $this->similarities[trim($route2).trim($route1)] = $param;
+        $this->similarities[$this->indexFor($route1, $route2)] = $param;
+        $this->similarities[$this->indexFor($route2, $route1)] = $param;
+    }
+
+    private function indexFor(string $route1, string $route2): string
+    {
+        return trim($route1).trim($route2);
     }
 }

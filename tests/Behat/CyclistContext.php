@@ -98,7 +98,7 @@ final class CyclistContext implements Context
      */
     public function iAmLookingForCompanion()
     {
-        $matchingService = new MatchingService($this->cyclists);
+        $matchingService = new MatchingService($this->cyclists, $this->similarityService);
 
         $this->match = $matchingService->getPropositionFor($this->currentUser);
     }
@@ -108,7 +108,6 @@ final class CyclistContext implements Context
      */
     public function iGetNoMatches()
     {
-        $cyclistToFind = $this->cyclists[$cyclistName];
-        Assert::same(null, $cyclistToFind);
+        Assert::null($this->match);
     }
 }
