@@ -1,7 +1,5 @@
 /vendor/
 .idea/
-/behat.yml
 .phpunit
-/phpunit.xml
 .phpunit.result.cache
 /bin
