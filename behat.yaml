@@ -10,3 +10,4 @@ default:
         app:
             contexts:
                 - Tests\App\Behat\GreetingsContext
+                - Tests\App\Behat\CyclistContext
