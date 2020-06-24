@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Behat;
 
 use App\Cyclist\Cyclist;
-use App\Cyclist\CyclistRepository;
+use App\Cyclist\MatchingService;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Webmozart\Assert\Assert;
@@ -13,8 +13,8 @@ use Webmozart\Assert\Assert;
 final class CyclistContext implements Context
 {
     private Cyclist $currentUser;
-    private CyclistRepository $cyclistRepository;
-    private $cyclists;
+    private array $cyclists = [];
+    private ?Cyclist $match;
 
     /**
      * @Given there is cyclist :name
@@ -38,7 +38,6 @@ final class CyclistContext implements Context
         }
 
         $this->cyclists[$name] = new Cyclist($name, $routes);
-        var_dump($this->cyclists);
     }
 
     /**
@@ -54,10 +53,8 @@ final class CyclistContext implements Context
      */
     public function iGetAsProposition(string $cyclistName)
     {
-//        Assert::same("Jane", 'Jerry');
-
-         $cyclistToFind = $this->cyclistRepository->getByName($cyclistName);
-         Assert::same($cyclistToFind, $matchingService->getPropositionFor($this->currentUser));
+        $cyclistToFind = $this->cyclists[$cyclistName];
+        Assert::same($this->match, $cyclistToFind);
     }
 
     /**
@@ -65,7 +62,7 @@ final class CyclistContext implements Context
      */
     public function theseRoutesAreSimilarToEachOtherIn(TableNode $table)
     {
-        //throw new PendingException();
+
     }
 
     /**
@@ -81,9 +78,8 @@ final class CyclistContext implements Context
      */
     public function iAmLookingForCompanion()
     {
-        $matchingService = new MatchingService();
+        $matchingService = new MatchingService($this->cyclists);
 
         $this->match = $matchingService->getPropositionFor($this->currentUser);
     }
-
 }
