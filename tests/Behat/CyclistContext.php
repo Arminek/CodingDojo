@@ -6,7 +6,6 @@ namespace Tests\App\Behat;
 
 use App\Cyclist\Cyclist;
 use App\Cyclist\CyclistRepository;
-use App\Cyclist\MatchingService;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Webmozart\Assert\Assert;
@@ -15,6 +14,7 @@ final class CyclistContext implements Context
 {
     private Cyclist $currentUser;
     private CyclistRepository $cyclistRepository;
+    private $cyclists;
 
     /**
      * @Given there is cyclist :name
@@ -29,7 +29,16 @@ final class CyclistContext implements Context
      */
     public function hasFavoriteRoutes(string $name, TableNode $table): void
     {
+        $routes = [];
+        foreach ($table as $row) {
+            $routes[] = [
+                'name' => $row['name'],
+                'distance' => $row['distance']
+            ];
+        }
 
+        $this->cyclists[$name] = new Cyclist($name, $routes);
+        var_dump($this->cyclists);
     }
 
     /**
@@ -45,9 +54,12 @@ final class CyclistContext implements Context
      */
     public function iGetAsProposition(string $cyclistName)
     {
-        $cyclistToFind = $this->cyclistRepository->getByName($cyclistName);
-        $matchingService = new MatchingService();
-        Assert::same($cyclistToFind, $matchingService->getPropositionFor($this->currentUser));
+        Assert::same("Jane", 'Jerry');
+        /**
+         * $cyclistToFind = $this->cyclistRepository->getByName($cyclistName);
+         * $matchingService = new MatchingService();
+         * Assert::same($cyclistToFind, $matchingService->getPropositionFor($this->currentUser));
+         */
     }
 
     /**
@@ -55,7 +67,7 @@ final class CyclistContext implements Context
      */
     public function theseRoutesAreSimilarToEachOtherIn(TableNode $table)
     {
-        throw new PendingException();
+        //throw new PendingException();
     }
 
     /**
@@ -63,7 +75,7 @@ final class CyclistContext implements Context
      */
     public function iAm($arg1)
     {
-        throw new PendingException();
+        //throw new PendingException();
     }
 
     /**
@@ -71,7 +83,7 @@ final class CyclistContext implements Context
      */
     public function iAmLookingForCompanion()
     {
-        throw new PendingException();
+        //throw new PendingException();
     }
 
 }
