@@ -10,6 +10,7 @@ use Behat\Gherkin\Node\TableNode;
 
 final class CyclistContext implements Context
 {
+
     /**
      * @Given there is cyclist :name
      */
