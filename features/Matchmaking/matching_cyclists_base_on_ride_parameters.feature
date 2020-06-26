@@ -1,32 +1,37 @@
-Feature: Match cyclists base on similar routes
-    In order to find companion that likes same kind of routes
+Feature: Match cyclists base on ride parameters
+    In order to find companion that likes same tempo, distance and time during trips
     As a cyclist
-    I want to have companion during my favorites routes
-
-    Background:
-        Given there is cyclist "Jerry"
-        And he has favorite routes
-            | name       | distance |
-            | Fort No    |     18,9 |
-            | North Azad |     23,1 |
-            | Whaming    |     22,3 |
-            | Sandmid    |     25,4 |
-            | St Niru    |     25,4 |
-        And there is cyclist "Jane"
-        And she has favorite routes
-            | name                | distance |
-            | Waneedgates         |     14,9 |
-            | West                |     17,1 |
-            | La Shead            |     23,2 |
-            | Fort Shingbroadkids |     21,1 |
-        And these routes are similar to each other in
-            | first route | second route | similarity |
-            | Fort No     | La Shead     |      0,98  |
-            | North Azad  | Sandmid      |      0,88  |
-            | Waneedgates | St Niru      |      0,96  |
+    I want to have companion that is interested in same type of trips
 
     @todo
-    Scenario: Matching two cyclists that have at least 3 routes with similarity score above 0,8
-        Given I am "Jerry"
+    Scenario: Matching two cyclists that have similar average speed (+/- 3 km/h)
+        Given there is cyclist "Jerry" with average speed 22 km/h
+        And there is cyclist "Jon" with average speed 24 km/h
+        And there is cyclist "Tom" with average speed 30 km/h
+        And there is cyclist "Jane" with average speed 18 km/h
+        And there is cyclist "Walt" with average speed 26 km/h
+        And I am "Jerry"
         When I am looking for companion
-        Then I get "Jane" as proposition
+        Then I get "Jon" and "Walt" as a proposition
+
+    @todo
+    Scenario: Matching two cyclists that have similar average distance (+/- 8 km)
+        Given there is cyclist "Jerry" with average distance 30 km
+        And there is cyclist "Jon" with average distance 25 km
+        And there is cyclist "Tom" with average distance 42 km
+        And there is cyclist "Jane" with average distance 15 km
+        And there is cyclist "Walt" with average distance 31 km
+        And I am "Jerry"
+        When I am looking for companion
+        Then I get "Jon" and "Walt" as a proposition
+
+    @todo
+    Scenario: Matching two cyclists that have similar average time (+/- 20 min)
+        Given there is cyclist "Jerry" with average time 1h 30m
+        And there is cyclist "Jon" with average time 2h 30m
+        And there is cyclist "Tom" with average time 1h 05m
+        And there is cyclist "Jane" with average time 1h 34m
+        And there is cyclist "Walt" with average time 1h 40m
+        And I am "Jerry"
+        When I am looking for companion
+        Then I get "Jane" and "Walt" as a proposition
